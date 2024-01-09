@@ -1,0 +1,81 @@
+// Ghidra decompiler output of function @ 0x1f00 (some stuff renamed/retyped)
+
+bool isValidLicense(char *email,char *code)
+
+{
+  long lVar1;
+  byte bVar2;
+  int iVar3;
+  size_t sVar4;
+  long lVar5;
+  ulong uVar6;
+  long lVar7;
+  uint uVar8;
+  ulong uVar9;
+  byte newCode [32];
+  char snprintf_out [32];
+  undefined4 hashed_email [4];
+  long local_28;
+  
+  lVar1 = *(long *)PTR____stack_chk_guard_100005048;
+  local_28 = lVar1;
+  sVar4 = _strlen(email);
+  _CC_MD5(email,(CC_LONG)sVar4,(uchar *)hashed_email);
+  uVar9 = 0;
+  ___snprintf_chk(snprintf_out,0x14,0,0x14,"%u",hashed_email[0]);
+  sVar4 = _strlen(code);
+  if (sVar4 == 0x18) {
+    sVar4 = _strlen(snprintf_out);
+    iVar3 = _strncmp(code,snprintf_out,sVar4);
+    uVar9 = 0;
+    if (iVar3 == 0) {
+      do {
+        if (9 < (byte)(code[uVar9] - 0x30U)) goto LAB_100002035;
+        newCode[uVar9] = code[uVar9] - 0x30U;
+        uVar9 = uVar9 + 1;
+      } while (uVar9 < 0x18);
+      lVar5 = 0;
+      lVar7 = 0;
+      do {
+        lVar7 = lVar7 + (ulong)newCode[lVar5 + 10];
+        lVar5 = lVar5 + 1;
+      } while (lVar5 != 5);
+      if (lVar7 == 0x15) {
+        lVar5 = 1;
+        lVar7 = 0;
+        do {
+          lVar5 = lVar5 * (ulong)newCode[lVar7 + 0xf];
+          lVar7 = lVar7 + 1;
+        } while (lVar7 != 5);
+        uVar9 = 0;
+        if (lVar5 == 0x1e0) {
+          uVar6 = 0;
+          do {
+            uVar9 = uVar9 + newCode[uVar6];
+            uVar6 = uVar6 + 2;
+          } while (uVar6 < 0x18);
+          uVar8 = (uint)uVar9;
+          bVar2 = 0;
+          uVar6 = 1;
+          uVar9 = 0;
+          if ((uVar8 & 0xf) == 3) {
+            do {
+              bVar2 = bVar2 + newCode[uVar6];
+              uVar6 = uVar6 + 2;
+            } while (uVar6 < 0x18);
+            uVar9 = (ulong)((bVar2 & 0xf) == 7);
+          }
+        }
+      }
+      else {
+LAB_100002035:
+        uVar9 = 0;
+      }
+    }
+  }
+  if (lVar1 == local_28) {
+    return SUB81(uVar9,0);
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
